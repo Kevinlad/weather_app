@@ -27,7 +27,7 @@ class WeatherProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-
+  
   Future<void> _saveLastSearchedCity(String city) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (_lastSearchedCities.contains(city)) {
@@ -40,7 +40,7 @@ class WeatherProvider with ChangeNotifier {
     await prefs.setStringList('lastSearchedCities', _lastSearchedCities);
     notifyListeners();
   }
-
+  /// on search get the details of the weather
   Future<void> getWeatherData(String location) async {
     _inProgress = true;
     notifyListeners();

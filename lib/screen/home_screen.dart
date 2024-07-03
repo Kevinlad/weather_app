@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/provider/weather_provider.dart';
@@ -28,7 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                // search bar for city search
                 _buildSearchWidget(context),
+
+                // load history of the search
                 Consumer<WeatherProvider>(
                   builder: (context, weatherProvider, child) {
                     if (showSuggestions &&
@@ -60,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Text(
                                             city,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.grey),
                                           ),
-                                          Icon(Icons.arrow_forward_sharp)
+                                          const Icon(Icons.arrow_forward_sharp)
                                         ],
                                       ),
                                     ))
@@ -78,10 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
+                // the details of the weather of search city and loadding circular indicator
                 Consumer<WeatherProvider>(
                   builder: (context, weatherProvider, child) {
                     if (weatherProvider.inProgress) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else {
                       return Expanded(
                         child: SingleChildScrollView(
@@ -121,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         IconButton(
-          icon: Icon(Icons.search),
+          icon: const Icon(Icons.search),
           onPressed: () {
             Provider.of<WeatherProvider>(context, listen: false)
                 .getWeatherData(_searchController.text);
@@ -131,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         IconButton(
-          icon: Icon(Icons.refresh),
+          icon: const Icon(Icons.refresh),
           onPressed: () {
             final location =
                 Provider.of<WeatherProvider>(context, listen: false)
@@ -147,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+//  main ui of the weather on search the waether.
   Widget _buildWeatherWidget(WeatherProvider weatherProvider) {
     if (weatherProvider.response == null) {
       return Text(weatherProvider.message);
@@ -184,8 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  (weatherProvider.response?.current?.tempC.toString() ?? "") +
-                      " °c",
+                  "${weatherProvider.response?.current?.tempC.toString() ?? ""} °c",
                   style: const TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
